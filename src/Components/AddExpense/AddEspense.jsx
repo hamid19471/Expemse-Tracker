@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import ExpenseForm from "../ExpenseForm/ExpenseForm";
 
-const AddEspense = ({ income, expense }) => {
+const AddEspense = ({ income, expense, addTransAction }) => {
     const [isShow, setIsShow] = useState(false);
     return (
         <div>
@@ -14,7 +14,7 @@ const AddEspense = ({ income, expense }) => {
             </IncomeTag>
             {isShow ? (
                 <ExpenseFormDiv>
-                    <ExpenseForm />
+                    <ExpenseForm addTransAction={addTransAction} />
                 </ExpenseFormDiv>
             ) : null}
             <ExpenseTag>
