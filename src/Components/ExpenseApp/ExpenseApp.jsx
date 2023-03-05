@@ -1,17 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import AddEspense from "../AddExpense/AddEspense";
-import TransAction from "../TeransAction/TransAction";
+import TransActions from "../TeransAction/TransActions";
 
 const ExpenseApp = () => {
     const [income, setIncom] = useState(0);
     const [expense, setExpense] = useState(0);
     const [transAction, setTransAction] = useState([]);
+    const addTransAction = (input) => {
+        console.log(input);
+        setTransAction([
+            ...transAction,
+            { ...input, id: Math.floor(Math.random() * 1000) },
+        ]);
+    };
+
+    useEffect(() => {
+        let income = 0;
+        let expense = 0;
+        transAction.map((item) =>
+            item.type === "Expense"
+                ? (expense += parseInt(item.amount))
+                : (income += parseInt(item.amount)),
+        );
+        setIncom(income);
+        setExpense(expense);
+    }, [transAction]);
     return (
         <Container>
-            <AddEspense income={income} expense={expense} />
+            <AddEspense
+                income={income}
+                expense={expense}
+                addTransAction={addTransAction}
+            />
             <TransActionDiv>
-                <TransAction teransAction={transAction} />
+                <TransActions transAction={transAction} />
             </TransActionDiv>
         </Container>
     );
